@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import logo from "../../assets/logo.png";
 
 import { NavBar } from "../NavBar/NavBar";
 

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import wolf from "../../assets/Pose_0010.png";
+import wolf from "../../assets/Pose_0017.png";
 import { Link } from "react-router-dom";
 import { ReactComponent as Arrow } from "../../assets/icon-arrow-right.svg";
 import { ReactComponent as Phone } from "../../assets/icon-phone-call.svg";

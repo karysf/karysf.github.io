@@ -91,9 +91,9 @@ const links = [
   },
 ];
 
-const list = links.map(({ label, to }) => {
+const list = links.map(({ label, to }, i) => {
   return (
-    <Li to={to}>
+    <Li key={i} to={to}>
       {label}
       {/* <Link to={to} >{label}</Link> */}
     </Li>
