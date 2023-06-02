@@ -9,3 +9,4 @@ const itemsInCart = selector({
     return cart.length;
   },
 });
+itemsInCart;

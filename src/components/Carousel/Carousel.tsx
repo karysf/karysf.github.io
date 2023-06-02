@@ -15,7 +15,7 @@ const Container = styled.div`
 export function Carousel() {
   const productList = useRecoilValue(productListState);
 
-  const items = productList.map((e, i) => <ItemCard key={e.id} item={e} />);
+  const items = productList.map((e) => <ItemCard key={e.id} item={e} />);
 
   return <Container>{items}</Container>;
 }
