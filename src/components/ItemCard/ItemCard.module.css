@@ -1,0 +1,24 @@
+.add_to_cart_button_container {
+  display: flex;
+  border-radius: 5px;
+  min-height: 40px;
+  min-width: 40px;
+}
+
+.add_to_cart_button_container:hover {
+  background-color: rgba(186, 223, 175, 0.47);
+}
+
+.amountInput::-webkit-outer-spin-button,
+.amountInput::-webkit-inner-spin-button {
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+.amountInput {
+  text-align: center;
+  margin: 0 2px;
+  appearance: "textfield";
+  -moz-appearance: textfield; /* Firefox */
+}

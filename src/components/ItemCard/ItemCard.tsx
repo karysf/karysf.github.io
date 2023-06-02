@@ -1,10 +1,18 @@
+/* eslint-disable no-debugger */
 import styled from "styled-components";
-import { Bushing } from "../Carousel/Carousel";
 import image from "../../assets/d315-sdr11-photo.png";
-import model from "../../assets/d315-sdr11-model.png";
 import { ReactComponent as CartICon } from "../../assets/icon-cart.svg";
 import { ReactComponent as RubleIcon } from "../../assets/icon-ruble.svg";
+import { useCallback, useMemo, useState } from "react";
+import {
+  addToCart,
+  cartState,
+  removeFromCart,
+} from "../../recoil/atoms/cartState";
 
+import styles from "./ItemCard.module.css";
+import { useRecoilState } from "recoil";
+import { Bushing } from "../../recoil/atoms/productsState";
 interface Props {
   item: Bushing;
 }
@@ -92,17 +100,86 @@ const Characteristics = styled.div`
   display: flex;
   justify-content: space-around;
   width: 100%;
+  margin-bottom: 10px;
 `;
 const Characteristic = styled.p`
   font-size: 16px;
   margin: 0;
 `;
+const CartButton = styled(CartICon)`
+  width: 20px;
+  height: 20px;
+  margin: auto;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+function getModelImgSrc(sdr: number, d: number) {
+  const res = `src/assets/pipe-models/d${d}-sdr${sdr}-long-model.png.png`;
+  return res;
+}
+
 export function ItemCard({ item }: Props) {
+  const modelSrc = getModelImgSrc(item.sdr, item.d);
+  const modelAlt = `Чертеж втулки d${item.d} sdr${item.sdr}`;
+
+  const [cart, setCart] = useRecoilState(cartState);
+  const addedAmount = useMemo(
+    () => cart.find((el) => el.id === item.id)?.quantity || 0,
+    [cart, item.id]
+  );
+
+  const handleAddToCart = useCallback(
+    (product: Bushing) => {
+      const newCart = addToCart(cart, product);
+      setCart(newCart);
+    },
+    [cart, setCart]
+  );
+
+  const handleAddFromInput = (product: Bushing, quantity: number) => {
+    const newCart = addToCart(cart, product, quantity);
+    setCart(newCart);
+  };
+
+  const handleRemoveFromCart = useCallback(
+    (product: Bushing) => {
+      const newCart = removeFromCart(cart, product);
+      setCart(newCart);
+    },
+    [cart, setCart]
+  );
+
+  const [value, setValue] = useState<string>(`${addedAmount}`);
+
+  const addItem = useCallback(() => {
+    setValue((prev) => `${Number(prev) + 1}`);
+    handleAddToCart(item);
+  }, [handleAddToCart, item]);
+
+  const addFromInput = (quantity: string) => {
+    handleAddFromInput(item, Number(quantity));
+  };
+
+  const deleteITem = useCallback(() => {
+    if (addedAmount >= 0) {
+      setValue((prev) => `${Number(prev) - 1}`);
+
+      handleRemoveFromCart(item);
+    }
+  }, [addedAmount, handleRemoveFromCart, item]);
+
   return (
     <CardContainer>
       <ImageContainer>
         <img src={image} alt="" width={150} height={150} />
-        <img src={model} alt="" width={150} height={150} />
+        <img
+          src={modelSrc}
+          // alt={modelAlt}
+          width={150}
+          height={150}
+        />
       </ImageContainer>
       <HeadingDiv>
         <Name> {item.name}</Name>
@@ -111,14 +188,35 @@ export function ItemCard({ item }: Props) {
           <RubleIcon width={20} height={20} fill="#1ad079" />
         </Price>
       </HeadingDiv>
-
       <Characteristics>
         <Characteristic>D{item.d} </Characteristic>
         <Characteristic>SDR{item.sdr}</Characteristic>
       </Characteristics>
+      <div className={styles.add_to_cart_button_container}>
+        {addedAmount === 0 && (
+          <CartButton onClick={addItem} className={styles.ak} />
+        )}
+        {addedAmount > 0 && (
+          <>
+            <button onClick={deleteITem}>-</button>
+            <input
+              className={styles.amountInput}
+              type="number"
+              value={value}
+              min="0"
+              max="1000"
+              onChange={(e) => {
+                setValue(e.target.value);
 
-      <CartICon width={20} height={20} />
-      <InStock>В наличии {item.amountInStock} шт.</InStock>
+                addFromInput(e.target.value);
+              }}
+            />
+            <button onClick={addItem}>+</button>
+          </>
+        )}
+      </div>
+
+      {/* <InStock>В наличии {item.amountInStock} шт.</InStock> */}
     </CardContainer>
   );
 }

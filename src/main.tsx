@@ -6,6 +6,8 @@ import { Welcome } from "./pages/WelcomePage/Welcome.tsx";
 import { Layout } from "./components/Layout/Layout.tsx";
 import { Catalog } from "./pages/Catalog/index.ts";
 import { Contacts } from "./pages/Contacts/Contacts.tsx";
+import { Cart } from "./pages/Cart/Cart.tsx";
+import { RecoilRoot } from "recoil";
 
 const router = createBrowserRouter([
   {
@@ -24,12 +26,18 @@ const router = createBrowserRouter([
         path: "/contacts",
         element: <Contacts />,
       },
+      {
+        path: "/cart",
+        element: <Cart />,
+      },
     ],
   },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <RecoilRoot>
+      <RouterProvider router={router} />
+    </RecoilRoot>
   </React.StrictMode>
 );
