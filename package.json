@@ -14,6 +14,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.10.0",
+    "recoil": "^0.7.7",
     "styled-components": "^5.3.10",
     "vite-plugin-react-svg": "^0.2.0",
     "vite-plugin-svgr": "^3.2.0"

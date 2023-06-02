@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import { FactoryIcon } from "../FactoryIcon/FactoryIcon";
+import { ReactComponent as CartICon } from "../../assets/icon-cart.svg";
+
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -66,7 +68,14 @@ const LogoDiv = styled.div`
   display: flex;
   align-items: end;
 `;
-
+const CartButton = styled(CartICon)`
+  width: 20px;
+  height: 20px;
+  margin: auto;
+  &:hover {
+    cursor: pointer;
+  }
+`;
 const LogoHeading = styled.h2`
   margin: 0;
   margin-left: 5px;
@@ -89,11 +98,15 @@ const links = [
     label: "Контакты",
     to: "/contacts",
   },
+  {
+    label: <CartButton />,
+    to: "/cart",
+  },
 ];
 
-const list = links.map(({ label, to }) => {
+const list = links.map(({ label, to }, i) => {
   return (
-    <Li to={to}>
+    <Li key={i} to={to}>
       {label}
       {/* <Link to={to} >{label}</Link> */}
     </Li>

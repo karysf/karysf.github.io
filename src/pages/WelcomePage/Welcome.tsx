@@ -1,8 +1,9 @@
 import styled from "styled-components";
-import wolf from "../../assets/Pose_0010.png";
+// import wolf from "../../assets/Pose_0000.png";
 import { Link } from "react-router-dom";
 import { ReactComponent as Arrow } from "../../assets/icon-arrow-right.svg";
 import { ReactComponent as Phone } from "../../assets/icon-phone-call.svg";
+import pipes from "../../assets/pipes.png";
 
 const WolfContainer = styled.div`
   display: flex;
@@ -13,7 +14,9 @@ const RightContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: end;
   padding-bottom: 25px;
+  width: 50%;
 `;
 
 const BasicLink = styled(Link)`
@@ -58,9 +61,12 @@ const LinksContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 30px;
+
+  margin-top: 20px;
 `;
 
 const Paragraph = styled.p`
+  text-align: end;
   font-size: 42px;
   font-family: "GolosText-Bold";
   margin-block-start: 0;
@@ -94,17 +100,26 @@ const PhoneStyled = styled(Phone)`
     transition: opacity 0.1s ease-in;
   }
 `;
+
+const CenterDiv = styled.div`
+  display: flex;
+  justify-content: center;
+`;
 export function Welcome() {
   return (
-    <>
-      <WolfContainer>
-        {/* <WolfContainer> */}
-        <img src={wolf} alt="приветственный волчара" width={500} height={500} />
-        {/* </WolfContainer> */}
+    <WolfContainer>
+      {/* <img src={wolf} alt="приветственный волчара" width={400} height={400} /> */}
+      <CenterDiv>
+        <div>
+          <img src={pipes} alt="Склад труб" />
+        </div>
+
         <RightContainer>
           <div>
             <Paragraph>Завод по производству полиэтиленовых изделий</Paragraph>
           </div>
+
+          {/* <img src={pipes} alt="Склад труб" /> */}
           <LinksContainer>
             <StyledLink to="/catalog">
               Посмотреть каталог
@@ -116,7 +131,7 @@ export function Welcome() {
             </StyledLink2>
           </LinksContainer>
         </RightContainer>
-      </WolfContainer>
-    </>
+      </CenterDiv>
+    </WolfContainer>
   );
 }
