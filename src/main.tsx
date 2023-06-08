@@ -9,30 +9,33 @@ import { Contacts } from "./pages/Contacts/Contacts.tsx";
 import { Cart } from "./pages/Cart/Cart.tsx";
 import { RecoilRoot } from "recoil";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Layout />,
-    children: [
-      {
-        path: "/",
-        element: <Welcome />,
-      },
-      {
-        path: "/catalog",
-        element: <Catalog />,
-      },
-      {
-        path: "/contacts",
-        element: <Contacts />,
-      },
-      {
-        path: "/cart",
-        element: <Cart />,
-      },
-    ],
-  },
-]);
+const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <Layout />,
+      children: [
+        {
+          path: "/",
+          element: <Welcome />,
+        },
+        {
+          path: "/catalog",
+          element: <Catalog />,
+        },
+        {
+          path: "/contacts",
+          element: <Contacts />,
+        },
+        {
+          path: "/cart",
+          element: <Cart />,
+        },
+      ],
+    },
+  ],
+  { basename: import.meta.env.DEV ? "/" : "/pipefitting/" }
+);
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
