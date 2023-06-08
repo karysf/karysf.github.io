@@ -85,10 +85,10 @@ const Price = styled.div`
   }
 `;
 
-const InStock = styled.div`
-  border-top: 1px solid #000;
-  margin-top: 5px;
-`;
+// const InStock = styled.div`
+//   border-top: 1px solid #000;
+//   margin-top: 5px;
+// `;
 
 const HeadingDiv = styled.div`
   display: flex;
@@ -122,7 +122,7 @@ function getModelImgSrc(sdr: number, d: number) {
 
 export function ItemCard({ item }: Props) {
   const modelSrc = getModelImgSrc(item.sdr, item.d);
-  const modelAlt = `Чертеж втулки d${item.d} sdr${item.sdr}`;
+  // const modelAlt = `Чертеж втулки d${item.d} sdr${item.sdr}`;
 
   const [cart, setCart] = useRecoilState(cartState);
   const addedAmount = useMemo(

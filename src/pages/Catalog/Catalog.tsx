@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Carousel } from "../../components/Carousel/Carousel";
-import { ItemCard } from "../../components/ItemCard";
 
 const Container = styled.div`
   display: flex;
