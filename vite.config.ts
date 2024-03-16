@@ -6,7 +6,7 @@ import svgr from "vite-plugin-svgr";
 export default defineConfig(({ command }) => {
   const config = {
     plugins: [react(), svgr()],
-    base: "/pipefitting/",
+    base: "./",
   };
 
   return config;
