@@ -9,9 +9,5 @@ export default defineConfig(({ command }) => {
     base: "/pipefitting/",
   };
 
-  if (command !== "serve") {
-    config.base = "/pipefitting/";
-  }
-
   return config;
 });
