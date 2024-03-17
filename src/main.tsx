@@ -33,8 +33,8 @@ const router = createBrowserRouter(
         },
       ],
     },
-  ],
-  { basename: import.meta.env.DEV ? "/" : "/pipefitting/" }
+  ]
+  // { basename: import.meta.env.DEV ? "/" : "/pipefitting/" }
 );
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
