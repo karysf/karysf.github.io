@@ -16,12 +16,15 @@ export function Cart() {
   // await axios.get(`https://api.telegram.org/bot${botToken}/getUpdates`);
 
   const text = useMemo(() => {
-    const list = cart.map((item) =>
-      `${products[item.id].name} - ${products[item.id].price} Х ${
-        item.quantity
-      }\n`.toString()
-    );
-    return `Ура, новая заявОчка\n${list}`;
+    const list = cart
+      .map((item, i) => {
+        const product = products[item.id];
+        return `${i + 1}. ${product.name} D${product.d} SDR${product.sdr} — ${
+          product.price
+        } Х ${item.quantity}шт`;
+      })
+      .join("\n");
+    return `Ура, новая заявОчка:\n${list}`;
   }, [cart, products]);
 
   const handleClick = async () => {
@@ -29,6 +32,10 @@ export function Cart() {
     try {
       await axios.post(`https://api.telegram.org/bot${botToken}/sendMessage`, {
         chat_id: 344505911,
+        text: text,
+      });
+      await axios.post(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+        chat_id: 1020171391,
         text: text,
       });
     } catch (error) {
