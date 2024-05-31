@@ -6,7 +6,7 @@ const RootContainer = styled.div`
   /* display: flex; */
   /* justify-content: center; */
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   background: linear-gradient(
     115deg,
     rgb(47 245 77 / 32%),
