@@ -1,7 +1,7 @@
 export function Contacts() {
   return (
     <>
-      <h1>Але-мале</h1>
+      <h1>Контакты</h1>
     </>
   );
 }
