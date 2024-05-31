@@ -5,6 +5,7 @@ import "./index.css";
 import { Welcome } from "./pages/WelcomePage/Welcome.tsx";
 import { Layout } from "./components/Layout/Layout.tsx";
 import { Delivery } from "./pages/Delivery/Delivery.tsx";
+import { Payment } from "./pages/Payment/Payment.tsx";
 import { Catalog } from "./pages/Catalog/index.ts";
 import { Contacts } from "./pages/Contacts/Contacts.tsx";
 import { Cart } from "./pages/Cart/Cart.tsx";
@@ -38,6 +39,10 @@ const router = createBrowserRouter(
         {
           path: "/delivery",
           element: <Delivery />,
+        },
+        {
+          path: "/payment",
+          element: <Payment />,
         },
       ],
     },
