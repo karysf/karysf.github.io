@@ -8,6 +8,9 @@ import { Catalog } from "./pages/Catalog/index.ts";
 import { Contacts } from "./pages/Contacts/Contacts.tsx";
 import { Cart } from "./pages/Cart/Cart.tsx";
 import { RecoilRoot } from "recoil";
+import { PrimeReactProvider } from "primereact/api";
+
+import "primereact/resources/themes/lara-light-cyan/theme.css";
 
 const router = createBrowserRouter(
   [
@@ -41,7 +44,9 @@ const router = createBrowserRouter(
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <RecoilRoot>
-      <RouterProvider router={router} />
+      <PrimeReactProvider>
+        <RouterProvider router={router} />
+      </PrimeReactProvider>
     </RecoilRoot>
   </React.StrictMode>
 );
