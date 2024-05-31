@@ -4,8 +4,9 @@ import { ReactComponent as RubleIcon } from "../../assets/icon-ruble.svg";
 import { productListState } from "../../recoil/atoms/productsState";
 import axios from "axios";
 import styled from "styled-components";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { ClientContactsForm } from "../../components/ClientContactsForm/ClientContactsForm";
+import { Message } from "primereact/message";
 import { Card } from "primereact/card";
 import { ItemControlButtons } from "../../components/ItemCard/ItemCard";
 import styles from "./Cart.module.css";
@@ -27,6 +28,8 @@ export function Cart() {
   const cart = useRecoilValue(cartState);
   const products = useRecoilValue(productListState);
   const tots = useRecoilValue(cartTotal);
+
+  const [clientContacts, setClientContacs] = useState<string | null>(null);
 
   const itemsInCart = cart.map((item, i) => {
     const cost = products[item.id].price * item.quantity;
@@ -54,6 +57,7 @@ export function Cart() {
   // await axios.get(`https://api.telegram.org/bot${botToken}/getUpdates`);
 
   const text = useMemo(() => {
+    const contactsString = `Контактный номер: ${clientContacts || "-"}`;
     const list = cart
       .map((item, i) => {
         const product = products[item.id];
@@ -62,8 +66,8 @@ export function Cart() {
         } Х ${item.quantity}шт`;
       })
       .join("\n");
-    return `Ура, новая заявОчка:\n${list}`;
-  }, [cart, products]);
+    return `Ура, новая заявОчка:\n${list}\n${contactsString}`;
+  }, [cart, products, clientContacts]);
 
   const handleClick = async () => {
     const botToken = "5984371784:AAGJp9FcTOldC2dCRdpXxA_CFER6y2Ql-c4";
@@ -72,10 +76,10 @@ export function Cart() {
         chat_id: 344505911,
         text: text,
       });
-      // await axios.post(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-      //   chat_id: 1020171391,
-      //   text: text,
-      // });
+      await axios.post(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+        chat_id: 1020171391,
+        text: text,
+      });
     } catch (error) {
       console.log(error);
     }
@@ -85,8 +89,20 @@ export function Cart() {
       <h1>Корзина</h1>
       <ul>{itemsInCart}</ul>
       <h4>Итого к оплате: {tots}</h4>
-      <ClientContactsForm />
-      <button onClick={handleClick}>ok</button>
+      <div className={styles.confirm_block}>
+        <Message
+          severity="info"
+          text="Внимание! Для оформления заказа необходимо указать ваши контактные данные, по которым с вами сможет связаться менеджер и подтвердить ваш заказ."
+        />
+        <ClientContactsForm setClientContacts={setClientContacs} />
+        <button
+          className={styles.confirm_button}
+          onClick={handleClick}
+          disabled={!clientContacts || tots === 0}
+        >
+          Заказать
+        </button>
+      </div>
     </>
   );
 }
