@@ -77,12 +77,6 @@ const Price = styled.div`
   background-color: #badfaf78;
   border-radius: 5%;
   padding: 2px 5px;
-
-  p {
-    color: #1ad079;
-    font-size: 24px;
-    margin: 0;
-  }
 `;
 
 // const InStock = styled.div`
@@ -120,10 +114,7 @@ function getModelImgSrc(sdr: number, d: number) {
   return res;
 }
 
-export function ItemCard({ item }: Props) {
-  const modelSrc = getModelImgSrc(item.sdr, item.d);
-  // const modelAlt = `Чертеж втулки d${item.d} sdr${item.sdr}`;
-
+export const ItemControlButtons = ({ item }: Props) => {
   const [cart, setCart] = useRecoilState(cartState);
   const addedAmount = useMemo(
     () => cart.find((el) => el.id === item.id)?.quantity || 0,
@@ -150,7 +141,6 @@ export function ItemCard({ item }: Props) {
     },
     [cart, setCart]
   );
-
   const [value, setValue] = useState<string>(`${addedAmount}`);
 
   const addItem = useCallback(() => {
@@ -171,6 +161,36 @@ export function ItemCard({ item }: Props) {
   }, [addedAmount, handleRemoveFromCart, item]);
 
   return (
+    <div className={styles.add_to_cart_button_container}>
+      {addedAmount === 0 && (
+        <CartButton onClick={addItem} className={styles.ak} />
+      )}
+      {addedAmount > 0 && (
+        <>
+          <button onClick={deleteITem}>-</button>
+          <input
+            className={styles.amountInput}
+            type="number"
+            value={value}
+            min="0"
+            max="1000"
+            onChange={(e) => {
+              setValue(e.target.value);
+
+              addFromInput(e.target.value);
+            }}
+          />
+          <button onClick={addItem}>+</button>
+        </>
+      )}
+    </div>
+  );
+};
+export function ItemCard({ item }: Props) {
+  const modelSrc = getModelImgSrc(item.sdr, item.d);
+  // const modelAlt = `Чертеж втулки d${item.d} sdr${item.sdr}`;
+
+  return (
     <CardContainer>
       <ImageContainer>
         <img src={image} alt="" width={150} height={150} />
@@ -184,38 +204,16 @@ export function ItemCard({ item }: Props) {
       <HeadingDiv>
         <Name> {item.name}</Name>
         <Price>
-          <p>{item.price}</p>
+          <p className={styles.price}>{item.price}</p>
           <RubleIcon width={20} height={20} fill="#1ad079" />
+          <p className={styles.price_hint}> шт</p>
         </Price>
       </HeadingDiv>
       <Characteristics>
         <Characteristic>D{item.d} </Characteristic>
         <Characteristic>SDR{item.sdr}</Characteristic>
       </Characteristics>
-      <div className={styles.add_to_cart_button_container}>
-        {addedAmount === 0 && (
-          <CartButton onClick={addItem} className={styles.ak} />
-        )}
-        {addedAmount > 0 && (
-          <>
-            <button onClick={deleteITem}>-</button>
-            <input
-              className={styles.amountInput}
-              type="number"
-              value={value}
-              min="0"
-              max="1000"
-              onChange={(e) => {
-                setValue(e.target.value);
-
-                addFromInput(e.target.value);
-              }}
-            />
-            <button onClick={addItem}>+</button>
-          </>
-        )}
-      </div>
-
+      <ItemControlButtons item={item} />
       {/* <InStock>В наличии {item.amountInStock} шт.</InStock> */}
     </CardContainer>
   );
