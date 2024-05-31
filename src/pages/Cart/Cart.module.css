@@ -21,3 +21,20 @@
     padding: 1rem 0;
   }
 }
+
+.confirm_block {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  .confirm_button {
+    color: #ffffff;
+    background: #06b6d4;
+    border: 1px solid #06b6d4;
+    width: 120px;
+  }
+  .confirm_button:disabled {
+    pointer-events: none;
+    opacity: 0.4;
+  }
+}
